@@ -24,7 +24,7 @@ export const experiences: ExperienceRole[] = [
     type: "full-time",
     period: "2025 — Presente",
     duration: "Atual",
-    location: "Juiz de Fora, MG · Remoto",
+    location: "Belo Horizonte, MG · Remoto",
     current: true,
     journeyNote: "Estágio atual — onde tudo converge",
     description:
