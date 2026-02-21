@@ -1,0 +1,328 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Design System — Pedro Ventura Portfolio
+  Referências: Linear, Vercel, portfólios de Anas Khan (Google DeepMind),
+  Justin Wallace (NVIDIA) e bento-grid trend 2025.
+  Acento: violet elétrico (#a78bfa) — único, memorável, técnico.
+*/
+
+@layer base {
+  :root,
+  .dark {
+    /* Base */
+    --background: 244 22% 4%;       /* #09090f — quase preto com tint roxo */
+    --foreground: 240 8% 94%;       /* #ededf2 — off-white */
+
+    /* Surfaces em 3 elevações */
+    --card: 244 18% 7%;             /* #0f0f1a */
+    --card-foreground: 240 8% 94%;
+    --popover: 244 18% 7%;
+    --popover-foreground: 240 8% 94%;
+
+    /* Primary — violet elétrico (Linear / Vercel) */
+    --primary: 252 90% 74%;         /* #a78bfa */
+    --primary-foreground: 244 22% 4%;
+
+    /* Secondary */
+    --secondary: 244 14% 11%;
+    --secondary-foreground: 240 6% 85%;
+
+    /* Muted */
+    --muted: 244 12% 13%;
+    --muted-foreground: 240 5% 52%;
+
+    /* Accent — emerald/teal para badges secundários */
+    --accent: 252 90% 74%;
+    --accent-foreground: 244 22% 4%;
+
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 240 8% 94%;
+
+    --border: 244 14% 15%;          /* #1c1c28 */
+    --input: 244 14% 10%;
+    --ring: 252 90% 74%;
+
+    --radius: 0.875rem;
+
+    /* Custom tokens */
+    --surface-1: hsl(244 18% 7%);   /* cards padrão */
+    --surface-2: hsl(244 16% 10%);  /* cards elevados */
+    --border-subtle: hsl(244 14% 15%);
+    --border-strong: hsl(252 90% 74% / 0.25);
+    --glow-violet: 0 0 60px hsl(252 90% 74% / 0.10);
+    --glow-violet-strong: 0 0 40px hsl(252 90% 74% / 0.20);
+
+    /* Accent colors fixos */
+    --emerald: 160 70% 44%;         /* #25c997 */
+    --ruby: 0 68% 58%;
+    --amber: 38 88% 50%;
+  }
+
+  .light {
+    --background: 0 0% 99%;
+    --foreground: 244 20% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 244 20% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 244 20% 10%;
+    --primary: 252 78% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 8% 95%;
+    --secondary-foreground: 244 15% 22%;
+    --muted: 240 6% 93%;
+    --muted-foreground: 244 6% 44%;
+    --accent: 252 78% 55%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 8% 88%;
+    --input: 240 6% 92%;
+    --ring: 252 78% 55%;
+
+    --surface-1: hsl(0 0% 100%);
+    --surface-2: hsl(240 8% 97%);
+    --border-subtle: hsl(240 8% 88%);
+    --border-strong: hsl(252 78% 55% / 0.3);
+    --glow-violet: 0 0 40px hsl(252 78% 55% / 0.08);
+    --glow-violet-strong: 0 0 30px hsl(252 78% 55% / 0.15);
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+
+  html { scroll-behavior: smooth; }
+  html.dark  { background-color: hsl(244 22% 4%); }
+  html.light { background-color: hsl(0 0% 99%); }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Ambient violet glow no topo — característica marcante dos portfólios FAANG */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 90% 55% at 50% -5%, hsl(252 90% 74% / 0.08), transparent 70%),
+      radial-gradient(ellipse 40% 30% at 0% 100%, hsl(160 70% 44% / 0.04), transparent);
+  }
+
+  #root { position: relative; z-index: 1; }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    @apply tracking-tight font-semibold;
+    letter-spacing: -0.025em;
+  }
+
+  code, pre, kbd { font-family: 'JetBrains Mono', monospace; }
+
+  ::selection {
+    background: hsl(252 90% 74% / 0.25);
+    color: hsl(240 8% 98%);
+  }
+}
+
+@layer components {
+  /* ── Gradient text ── */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(120deg, hsl(252 90% 80%) 0%, hsl(280 70% 72%) 50%, hsl(200 80% 68%) 100%);
+  }
+
+  .text-gradient-subtle {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(120deg, hsl(240 8% 94%) 0%, hsl(252 30% 78%) 100%);
+  }
+
+  /* ── Cards ── */
+  .card-base {
+    @apply rounded-2xl border transition-all duration-300;
+    background: var(--surface-1);
+    border-color: var(--border-subtle);
+  }
+
+  .card-premium {
+    @apply card-base p-6;
+  }
+
+  .card-premium:hover {
+    border-color: var(--border-strong);
+    box-shadow: var(--glow-violet);
+  }
+
+  .card-hover {
+    @apply rounded-2xl border p-6 transition-all duration-300;
+    background: var(--surface-1);
+    border-color: var(--border-subtle);
+  }
+
+  .card-hover:hover {
+    background: var(--surface-2);
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+    box-shadow: var(--glow-violet);
+  }
+
+  /* ── Bento card (glassmorphism light) ── */
+  .bento-card {
+    @apply rounded-2xl border p-5 transition-all duration-300 relative overflow-hidden;
+    background: hsl(244 18% 7% / 0.8);
+    border-color: var(--border-subtle);
+    backdrop-filter: blur(12px);
+  }
+
+  .bento-card:hover {
+    border-color: var(--border-strong);
+    box-shadow: var(--glow-violet);
+  }
+
+  /* ── fadeUp util ── */
+  .fadeUp { opacity: 0; transform: translateY(16px); }
+
+  /* ── Métricas ── */
+  .metric-value {
+    @apply font-bold tracking-tight;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    letter-spacing: -0.04em;
+    color: hsl(var(--primary));
+  }
+
+  .metric-label {
+    @apply text-sm font-medium;
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* ── Chips/Tags ── */
+  .chip {
+    @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium;
+    background: hsl(244 14% 11%);
+    color: hsl(240 5% 72%);
+    border: 1px solid hsl(244 14% 18%);
+  }
+
+  .chip-primary {
+    @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium;
+    background: hsl(252 90% 74% / 0.12);
+    color: hsl(252 90% 80%);
+    border: 1px solid hsl(252 90% 74% / 0.25);
+  }
+
+  .chip-emerald {
+    @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-medium;
+    background: hsl(160 70% 44% / 0.12);
+    color: hsl(160 70% 55%);
+    border: 1px solid hsl(160 70% 44% / 0.25);
+  }
+
+  /* ── Badges de role ── */
+  .badge-techlead {
+    @apply inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold;
+    background: hsl(263 70% 58% / 0.15);
+    color: hsl(263 70% 72%);
+    border: 1px solid hsl(263 70% 58% / 0.3);
+  }
+
+  .badge-fullstack {
+    @apply inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold;
+    background: hsl(160 70% 44% / 0.15);
+    color: hsl(160 70% 60%);
+    border: 1px solid hsl(160 70% 44% / 0.3);
+  }
+
+  .badge-pm {
+    @apply inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold;
+    background: hsl(199 80% 50% / 0.15);
+    color: hsl(199 80% 65%);
+    border: 1px solid hsl(199 80% 50% / 0.3);
+  }
+
+  .badge-available {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold;
+    background: hsl(160 70% 44% / 0.12);
+    color: hsl(160 70% 58%);
+    border: 1px solid hsl(160 70% 44% / 0.25);
+  }
+
+  /* ── Layout / Section ── */
+  .section-label {
+    @apply text-xs font-semibold uppercase tracking-widest;
+    color: hsl(var(--primary));
+    letter-spacing: 0.12em;
+  }
+
+  .section-title {
+    @apply font-bold;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+
+  .section-subtitle {
+    @apply text-base leading-relaxed;
+    color: hsl(var(--muted-foreground));
+    max-width: 38rem;
+  }
+
+  /* ── Nav ── */
+  .nav-link {
+    @apply text-sm font-medium transition-colors duration-200;
+    color: hsl(var(--muted-foreground));
+  }
+
+  .nav-link:hover { color: hsl(var(--foreground)); }
+
+  .nav-link.active { color: hsl(var(--foreground)); }
+
+  /* ── Timeline ── */
+  .timeline-dot {
+    @apply w-2 h-2 rounded-full flex-shrink-0 mt-2;
+    background: hsl(var(--primary));
+    box-shadow: 0 0 0 4px hsl(252 90% 74% / 0.15);
+  }
+
+  .timeline-line {
+    @apply w-px flex-shrink-0 self-stretch;
+    background: linear-gradient(to bottom, hsl(252 90% 74% / 0.4), hsl(244 14% 15%));
+  }
+}
+
+@layer utilities {
+  .bg-surface-1 { background: var(--surface-1); }
+  .bg-surface-2 { background: var(--surface-2); }
+  .border-subtle { border-color: var(--border-subtle); }
+  .border-strong { border-color: var(--border-strong); }
+
+  .animate-in-up {
+    animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-in-fade {
+    animation: fadeIn 0.4s ease both;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  /* Glow de texto para headline principal */
+  .glow-text {
+    text-shadow: 0 0 80px hsl(252 90% 74% / 0.3);
+  }
+}
