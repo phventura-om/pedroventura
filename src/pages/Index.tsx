@@ -247,12 +247,12 @@ const Index = () => (
           </Link>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-2 gap-4 items-stretch">
           {featuredProjects.map((project, i) => (
             <motion.div key={project.slug}
               initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.45, delay: i * 0.08 }}
-              className="h-full">
+              className="h-full flex flex-col">
               <ProjectCard project={project} index={i} />
             </motion.div>
           ))}

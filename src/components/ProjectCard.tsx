@@ -21,12 +21,12 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
   return (
     <Link
       to={`/projetos/${project.slug}`}
-      className="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:rounded-2xl"
+      className="group flex flex-col h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:rounded-2xl"
     >
       <motion.div
         whileHover={{ y: -3 }}
         transition={{ duration: 0.2, ease: "easeOut" }}
-        className="card-hover h-full flex flex-col"
+        className="card-hover flex-1 flex flex-col"
       >
         {/* Header: número + categoria + badge */}
         <div className="flex items-start justify-between gap-2 mb-4">
